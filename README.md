@@ -34,7 +34,7 @@ chmod 700 shell.sh
 use foobar
 ```
 
-#### show dbs 
+#### Show dbs 
 
 ```
 show dbs 
@@ -58,5 +58,13 @@ db.persons.findOne()
 
 ```
 db.persons.update({name:"hua"},{$set:{name:"huahuahua"}})
+db.persons.update({name:"huahuahua"},{{age:30}}) // Update
+db.persons.update({name:"huahuahua"},{$set:{age:30}}) // Append
+```
+
+#### Remove
+
+```
+db.persons.remove({name:"liang"})
 ```
 
