@@ -26,7 +26,7 @@ mongod --dbpath /Users/hliang/mongoDBData
 chmod 700 shell.sh
 ```
 
-## Knowledge
+## Commands
 
 #### Create DB
 
@@ -38,6 +38,12 @@ use foobar
 
 ```
 show dbs 
+```
+
+#### Show Collections
+
+```
+show collections
 ```
 
 #### Insert
@@ -67,4 +73,47 @@ db.persons.update({name:"huahuahua"},{$set:{age:30}}) // Append
 ```
 db.persons.remove({name:"liang"})
 ```
+
+#### Drop Table
+
+```
+db.persons.drop();
+```
+
+#### Drop Database
+
+```
+db.dropdatabase
+```
+
+#### Help
+
+```
+db.help()
+```
+
+#### API
+
+http://mongodb.github.io/mongo-java-driver/
+
+#### Naming Convention
+
+- Small case
+- 64 chars maximum
+- Can't be *<u>admin</u>*, *<u>local</u>* or *<u>config</u>*
+
+#### MongoDb js engine
+
+```
+function insert(object){
+	db.getCollection("persons").insert(object)
+};
+
+insert({name:"huahuahua", age: 31});
+db.persons.find();
+```
+
+#### Gui
+
+MongoDB Compass -https://www.mongodb.com/download-center?jmp=nav#compass
 
