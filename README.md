@@ -117,3 +117,88 @@ db.persons.find();
 
 MongoDB Compass -https://www.mongodb.com/download-center?jmp=nav#compass
 
+#### Batch Insert
+
+```
+for(var i=0;i<10;i++){
+	db.persons.insert({name: i})
+}
+```
+
+#### Save v.s. Insert
+
+Save would execute update function if *_id* has already exists. Insert would throw an error.
+
+#### Remove
+
+Collection itself and index won't be removed.
+
+```
+db.persons.remove()
+db.persons.remove({"_id":2}) // where clause
+```
+
+#### InsertOrUpdate
+
+```
+db.persons.update({_id:5},{_id:5, name:"insertorupdate"}, true)
+```
+
+#### Batch Update
+
+```
+db.persons.update({name:9},{$set:{name:"hiiiiiiiii"}}, false, true)
+```
+
+#### Inc
+
+```
+// before
+// { "_id" : ObjectId("5ada6c769f2f7b3e66a88870"), "name" : 4 }
+
+db.persons.update({name:4},{$inc:{name:10000000000}})
+
+// after
+// { "_id" : ObjectId("5ada6c769f2f7b3e66a88870"), "name" : 10000000004 }
+```
+
+#### Push
+
+```
+db.persons.insert({name: "array", books:[]})
+db.persons.update({name:"array"}, {$push:{books:"java1"}})
+db.persons.update({name:"array"}, {$push:{books:"java2"}})
+```
+
+#### **$pushAll has been deprecated**
+
+```
+db.persons.update({type:"array"}, {$pushAll:{books:["java1","java2","java3","java4"]}})
+
+// output
+WriteResult({
+	"nMatched" : 0,
+	"nUpserted" : 0,
+	"nModified" : 0,
+	"writeError" : {
+		"code" : 9,
+		"errmsg" : "Unknown modifier: $pushAll"
+	}
+})
+
+```
+
+#### **Reference a field from the original or intermediary document**
+
+```
+db.persons.insert({_id:1, books:[{type:"js",name:"javascript"},{type:"java", name:"java fundamental"},{type:".vb", name:"visual basic"}]})
+
+db.persons.update({"books.type":"java"},{$set:{"books.$.author":"Hua Liang"}})
+```
+
+#### AddToSet
+
+```
+db.persons.update({_id:1},{$addToSet:{books:{$each:[{type:".vb",name:"visual basic"},{type:"objective c", name:"ios stuff"}]}}})
+```
+
